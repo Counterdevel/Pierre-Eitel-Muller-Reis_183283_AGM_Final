@@ -9,15 +9,23 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Agenda">
-        <activity android:name=".MainActivity">                                                     //activity: lança as atividades.
-            <intent-filter>                                                                         //intent=filter: inicia as atividades e permite que o programa seja instalado.
-                <action android:name="android.intent.action.MAIN"/>                                 //action: adiciona uma ação ao intent-filter.
+        <activity android:name=".ui.activities.FormularioPessoaActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER"/>                         //category: adiciona um nome de categoria ao intent-filter.
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
-
-        </application>
+        <activity android:name=".ui.activities.ListaPessoasActivity">
+            //activity: lança as atividades.
+            <intent-filter>
+                //intent=filter: inicia as atividades e permite que o programa seja instalado.
+                <action android:name="android.intent.action.MAIN" />
+                //action: adiciona uma ação ao intent-filter.
+                <category android:name="android.intent.category.LAUNCHER" />
+                //category: adiciona um nome de categoria ao intent-filter.
+            </intent-filter>
+        </activity>
+    </application>
 
 </manifest>
