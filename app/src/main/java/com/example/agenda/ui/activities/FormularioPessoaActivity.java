@@ -2,15 +2,20 @@ package com.example.agenda.ui.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.agenda.R;
 import com.example.agenda.dao.PessoaDAO;
 import com.example.agenda.model.Pessoa;
+import com.github.rtoshiro.util.format.SimpleMaskFormatter;
+import com.github.rtoshiro.util.format.text.MaskTextWatcher;
 
 import static com.example.agenda.ui.activities.ConstantesActivities.CHAVE_PESSOA;
 
@@ -40,6 +45,21 @@ public class FormularioPessoaActivity extends AppCompatActivity {
 
     private final PessoaDAO dao = new PessoaDAO();                                                  //Classe para persistência de dados.
     private Pessoa pessoa;
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {                                                 //Mostra o icone de salvar.
+        getMenuInflater().inflate(R.menu.activity_formulario_pessoa_menu_salvar, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int itemId = item.getItemId();
+        if(itemId == R.id.activity_formulario_pessoa_menu_salvar){
+            finalizaFormulario();
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -124,5 +144,26 @@ public class FormularioPessoaActivity extends AppCompatActivity {
         campoGenero = findViewById(R.id.editText_genero);
         campoAltura = findViewById(R.id.editText_altura);
         campoNascimento = findViewById(R.id.editText_nascimento);
+
+        //Mascaras para os campos
+        SimpleMaskFormatter smfCEP = new SimpleMaskFormatter("NNNNN-NNN");
+        MaskTextWatcher mtwCEP = new MaskTextWatcher(campoCEP, smfCEP);
+        campoCEP.addTextChangedListener(mtwCEP);
+
+        SimpleMaskFormatter smfRG = new SimpleMaskFormatter("NN.NNN.NNN-N");
+        MaskTextWatcher mtwRG = new MaskTextWatcher(campoRG, smfRG);
+        campoRG.addTextChangedListener(mtwRG);
+
+        SimpleMaskFormatter smfTelefone = new SimpleMaskFormatter("(NN)NNNNN-NNNN");
+        MaskTextWatcher mtwTelefone = new MaskTextWatcher(campoTelefone, smfTelefone);
+        campoTelefone.addTextChangedListener(mtwTelefone);
+
+        SimpleMaskFormatter smfAltura = new SimpleMaskFormatter("N,NN");
+        MaskTextWatcher mtwAltura = new MaskTextWatcher(campoAltura, smfAltura);
+        campoAltura.addTextChangedListener(mtwAltura);
+
+        SimpleMaskFormatter smfNascimento = new SimpleMaskFormatter("NN/NN/NNNN");
+        MaskTextWatcher mtwNascimento = new MaskTextWatcher(campoNascimento, smfNascimento);
+        campoNascimento.addTextChangedListener(mtwNascimento);
     }
 }

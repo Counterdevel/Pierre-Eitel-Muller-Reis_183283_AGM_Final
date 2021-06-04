@@ -14,26 +14,41 @@ public class PessoaDAO {
 
         pessoaSalvo.setId(contadorDeId);                                                            //Seta o id para o pessoaSalvo id.
         pessoas.add(pessoaSalvo);                                                                   //Adiciona a pessoa salva.
+        atualizaId();
+    }
+
+    private void atualizaId() {
         contadorDeId++;                                                                             //Agrega +1 ao id.
     }
 
     public void edita(Pessoa pessoa){                                                               //Método para editar informações.
 
-        Pessoa pessoaEscolhida = null;
-        for (Pessoa p :
-                pessoas) {
-            if (p.getId() == pessoa.getId()) {                                                      //Compara o id com o item que foi selecionado.
-                pessoaEscolhida = p;
-            }
-        }
+        Pessoa pessoaEscolhida = buscaIdPessoa(pessoa);
         if(pessoaEscolhida != null){                                                                //Edita a informação do item selecionado.
             int posicaoDaPessoa = pessoas.indexOf(pessoaEscolhida);
             pessoas.set(posicaoDaPessoa, pessoa);
         }
     }
 
+    private Pessoa buscaIdPessoa(Pessoa pessoa){
+        for (Pessoa p :
+                pessoas) {
+            if (p.getId() == pessoa.getId()) {
+                return p;
+            }
+        }
+        return null;
+    }
+
     public List<Pessoa> todos() {                                                                   //Método que retorna as informações salvas.
 
         return new ArrayList<>(pessoas);
+    }
+
+    public void remove(Pessoa pessoa) {                                                             //Método para remover a pessoa se for diferente de nulo.
+        Pessoa pessoaDevolvida = buscaIdPessoa(pessoa);
+        if(pessoaDevolvida != null){
+            pessoas.remove(pessoaDevolvida);
+        }
     }
 }
